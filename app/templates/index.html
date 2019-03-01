@@ -21,16 +21,16 @@
 
 <body>
   {% block content %}
-  <h1>Hello wellcome to pitches</h1>
+  <h1>Hello wellcome to blogposts!!!</h1>
   <ul>
-      {%for pitch in pitches%}       
-     <li>{{pitch.description_path}}</li> 
+      {%for blogpost in blogposts%}       
+     <li>{{blogpost.description_path}}</li> 
      <a href="/comment/new" class="btn">Leave comment</a>
      <a href="/comment" class="btn">view comments</a>
   
   {%endfor%}
   </ul>
-  <a href="/pitch/new" class="btn">Add pitch</a>
+  <a href="/blogpost/new" class="btn">Add blogpost</a>
   {% endblock%}
 
 </body>

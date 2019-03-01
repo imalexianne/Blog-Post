@@ -19,7 +19,7 @@ class User(UserMixin,db.Model):
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     pass_secure = db.Column(db.String(255))
-    pitches = db.relationship('Pitch',backref = 'user',lazy="dynamic")
+    blogposts = db.relationship('Blogpost',backref = 'user',lazy="dynamic")
     comments = db.relationship('Comment',backref = 'user', lazy="dynamic")
     @property
     def password(self):
@@ -36,8 +36,8 @@ class User(UserMixin,db.Model):
     def __repr__(self):
         return f'User {self.username}'
 
-class Pitch(db.Model):
-    __tablename__ = 'pitches'
+class Blogpost(db.Model):
+    __tablename__ = 'blogposts'
 
     id = db.Column(db.Integer,primary_key = True)
     description_path = db.Column(db.String(255))
@@ -47,14 +47,14 @@ class Pitch(db.Model):
     comments = db.relationship('Comment',backref = 'pitch',lazy="dynamic")
     def __repr__(self):
         return f'User {self.description_path}'
-    def save_pitch(self):
+    def save_blogpost(self):
         db.session.add(self)
         db.session.commit()
 
     @classmethod
-    def get_pitches(cls,id):
-        pitches = Pitch.query.all()
-        return pitches
+    def get_blogposts(cls,id):
+        blogposts = Blogpost.query.all()
+        return blogposts
 
     # @classmethod
     # def clear_pitches(cls):
@@ -69,7 +69,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     description_all = db.Column(db.String(255))
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
+    blogpost_id = db.Column(db.Integer,db.ForeignKey('blogposts.id'))
 
     # users = db.relationship('User',backref = 'role',lazy="dynamic")
 

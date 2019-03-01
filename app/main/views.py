@@ -2,8 +2,8 @@ from flask_login import login_required,current_user
 from . import main
 from flask import render_template,request,redirect,url_for,abort
 # from ..models import User,PhotoProfile
-from ..models import User,Pitch,Comment
-from .forms import UpdateProfile,PitchForm,CommentForm
+from ..models import User,Blogpost,Comment
+from .forms import UpdateProfile,BlogpostForm,CommentForm
 # from .forms import ReviewForm,UpdateProfile
 from .. import db,photos
 import markdown2 
@@ -17,11 +17,11 @@ def index():
     '''
     View root page function that returns the index page and its data
     '''
-    pitches = Pitch.get_pitches(id)
+    blogposts = Blogpost.get_blogposts(id)
     comments = Comment.get_comments()
-    title = 'Home - Welcome to The best Pitches Review Website Online'
+    title = 'Home - Welcome to The best Blogposts Review Website Online'
 
-    return render_template('index.html', title = title, pitches=pitches,comments= comments)
+    return render_template('index.html', title = title, blogposts=blogposts,comments= comments)
 
 
 
@@ -71,10 +71,10 @@ def update_pic(uname):
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
 
-@main.route('/pitch/new', methods = ['GET','POST'])
+@main.route('/blogpost/new', methods = ['GET','POST'])
 @login_required
-def new_pitch():
-    form = PitchForm()
+def new_blogpost():
+    form = BlogpostForm()
     
     if form.validate_on_submit():
         # title = form.title.data
@@ -83,35 +83,35 @@ def new_pitch():
         posted = form.posted.data
 
         # Updated review instance
-        new_pitch = Pitch(description_path=description_path, category=category,posted=posted, user_id= current_user.id)
+        new_blogpost = Blogpost(description_path=description_path, category=category,posted=posted, user_id= current_user.id)
 
         # save review method
-        new_pitch.save_pitch()
+        new_blogpost.save_blogpost()
         return redirect(url_for('.index',description_path = description_path ))
 
     # title = f'{movie.title} review'
-    return render_template('new_pitch.html', pitch_form=form)
+    return render_template('new_blogpost.html', blogpost_form=form)
 
 
 
 
 
-@main.route('/pitch/<int:id>')
-def single_pitch(id):
+@main.route('/blogpost/<int:id>')
+def single_blogpost(id):
     login_required
-    pitch=Pitch.query.get(id)
-    if pitch is None:
+    blogpost=Blogpost.query.get(id)
+    if blogpost is None:
         abort(404)
-    format_pitch = markdown2.markdown(pitch.user_pitch,extras=["code-friendly", "fenced-code-blocks"])
-    return render_template('pitch.html',pitch = pitch,format_pitch=format_pitch)
+    format_blogpost = markdown2.markdown(blogpost.user_blogpost,extras=["code-friendly", "fenced-code-blocks"])
+    return render_template('blogpost.html',blogpost = blogpost,format_blogpost=format_blogpost)
 
 
 
-@main.route('/pitch')
-def diplay_pitch():
-   pitches = Pitch.get_pitches()
-   print(pitches)
-   return render_template("new_pitch.html",pitches = pitches)
+@main.route('/blogpost')
+def diplay_blogpost():
+   blogposts = Blogpost.get_blogposts()
+   print(blogposts)
+   return render_template("new_blogpost.html",blogposts = blogposts)
 
 
 @main.route('/comment/new',methods= ['GET','POST'])

@@ -4,9 +4,9 @@ from wtforms.validators import Required
 from wtforms.fields.html5 import DateField
 
 
-class PitchForm(FlaskForm):
-    category = StringField('Pitch category',validators=[Required()])
-    description_path = TextAreaField('post a pitch')
+class BlogpostForm(FlaskForm):
+    category = StringField('Blogpost category',validators=[Required()])
+    description_path = TextAreaField('write a blogpost')
     posted = DateField('date and time')
 
     submit = SubmitField('Submit')
