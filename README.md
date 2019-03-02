@@ -3,7 +3,7 @@
 This project was generated with python3.6
 
 ## Project description
-An application by which a user is abble to sign up, to login, to be stored in the database, to be able to post a pitch, navigate on others'pitches and comment on them.
+An application by which a user is abble to sign up, to login, to be stored in the database, to be able to post a blog, navigate on others'blogs and comment on them.
 
 
 ## Project setup instructions
@@ -16,7 +16,7 @@ I used the terminal from ubuntu and This project was generated with Python versi
 
 
 ## Link to live site on Github Pages
-https://github.com/imalexianne/Web-app
+https://github.com/imalexianne/Blog-Post
 
-Copyright and license information
+## Copyright and license information
 This project is licensed under the MIT License
