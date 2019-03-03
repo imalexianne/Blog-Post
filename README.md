@@ -1,4 +1,5 @@
-# Web-App
+# Blog-Post
+
 ## By IMANIRAKARAMA Alexianne
 This project was generated with python3.6
 
