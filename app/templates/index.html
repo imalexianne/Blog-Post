@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+  <head> 
 
   <meta charset="UTF-8">
   {% if title %}
@@ -16,33 +16,36 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
  
   
-   
+  <link rel="stylesheet" href="{{url_for ('static',filename='CSS/index.css')}}">
   </head>
 
 <body>
   {% block content %}
-  <h1>Hello wellcome to blogposts!!!</h1>
 
-  <div class="container-fluid">
-    
-    <a href="/subscribe" style="float:right;">subscribe</a>
-  </div>
+  <h1 class="text-center text-lg">Hello wellcome to blogposts!!!</h1>
+
+  
   <blockquote class="text-center text-lg">
       <h2> Random Quotes</h2>
       <p>{{quote.quote}}</p>
       <p class="sab">Author: {{quote.author}}</p>
   <br><br>
 
-  <ul>
+  
       {%for blogpost in blogposts%}       
-     <li>Blogpost:{{blogpost.description_path}}</li> 
+     <p>Blogpost:{{blogpost.description_path}}</p> 
      <a href="/comment/new" class="btn btn-primary btn-md">Leave comment</a>
-     <a class="btn btn-primary btn-md" href="/delete/{{blogpost.id}}">Delete blogpost</a>
+     <a class="btn btn-primary btn-md" href="/delete/{{blogpost.id}}">Delete blogpost</a> 
      <a href="/comment" class="btn btn-primary btn-md">view comments</a>
   
   {%endfor%}
-  </ul>
-  <a href="/blogpost/new" class="btn btn-primary btn-md">Add blogpost</a>
+  
+  <p><a href="/blogpost/new" class="btn btn-primary btn-md">Add blogpost</a> </p><br>
+
+  <div class="container-fluid">
+    
+      <a href="/subscribe" style="float:center;">subscribe</a>
+    </div>
   {% endblock%}
 
 </body>

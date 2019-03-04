@@ -136,15 +136,15 @@ def new_comment():
     form = CommentForm()
     if form.validate_on_submit():
         description_all = form.description_all.data
-        
+        author =form.author.data
         
 
         # Updated review instance
-        new_comment = Comment(description_all=description_all,user_id=current_user.id)
+        new_comment = Comment(description_all=description_all,user_id=current_user.id,blogpost_id=current_blogpost.id)
 
         # save review method
         new_comment.save_comment()
-        return redirect(url_for('.index',description_all=description_all ))
+        return redirect(url_for('.index',description_all=description_all  ))
 
  
     return render_template('new_comment.html', comment_form=form)
@@ -178,8 +178,8 @@ def subscriber():
         db.session.add(subscriber)
         db.session.commit()
 
-        mail_message("Welcome to my blogpost","email/welcome_user",subscriber.email,subscriber=subscriber)
-        flash('A confirmation by email has been sent to you by email')
+        # mail_message("Welcome to my blogpost","email/welcome_user",subscriber.email,subscriber=subscriber)
+        # flash('A confirmation by email has been sent to you by email')
         return redirect(url_for('main.index'))
         title = 'Subscribe'
     return render_template('subscription.html',form=form)

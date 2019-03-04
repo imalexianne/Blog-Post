@@ -17,7 +17,10 @@
     {%block content%}
     {%for comment in comments%}
     <ul>
+        <li>User:{{comment.user_id}}</li>
+       
         <li>Comment:{{comment.description_all}}</li>
+        <li><a class="btn btn-primary btn-md" href="/delete/{{comment.id}}">Delete comment</a> </li>
         
        
     </ul>
