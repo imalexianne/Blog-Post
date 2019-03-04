@@ -35,13 +35,14 @@
 
   <ul>
       {%for blogpost in blogposts%}       
-     <li>{{blogpost.description_path}}</li> 
-     <a href="/comment/new" class="btn">Leave comment</a>
-     <a href="/comment" class="btn">view comments</a>
+     <li>Blogpost:{{blogpost.description_path}}</li> 
+     <a href="/comment/new" class="btn btn-primary btn-md">Leave comment</a>
+     <a class="btn btn-primary btn-md" href="/delete/{{blogpost.id}}">Delete blogpost</a>
+     <a href="/comment" class="btn btn-primary btn-md">view comments</a>
   
   {%endfor%}
   </ul>
-  <a href="/blogpost/new" class="btn">Add blogpost</a>
+  <a href="/blogpost/new" class="btn btn-primary btn-md">Add blogpost</a>
   {% endblock%}
 
 </body>

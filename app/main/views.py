@@ -3,7 +3,7 @@ from . import main
 from flask import render_template,request,redirect,url_for,abort
 # from ..models import User,PhotoProfile
 from ..models import Blogpost, Comment, User, Subscriber, Quote
-from .forms import BlogpostForm, CommentForm
+from .forms import BlogpostForm, CommentForm,SubscriberForm
 # from .forms import ReviewForm,UpdateProfile
 from .. import db,photos
 import markdown2 
@@ -34,9 +34,10 @@ def index():
 
     blogposts = Blogpost.get_blogposts(id)
     comments = Comment.get_comments()
+    subscribers = Subscriber.get_subscribers(id)
     title = 'Home - Welcome to The best Blogposts Review Website Online'
 
-    return render_template('index.html', title = title, blogposts=blogposts,comments= comments, quote=quote)
+    return render_template('index.html', title = title, blogposts=blogposts,comments= comments, quote=quote, subscribers=subscribers)
 
 
 
@@ -167,3 +168,50 @@ def delcomment(id):
     print(comment)
     title = 'delete comments'
     return render_template('delete.html',title = title, comment = comment)
+
+@main.route('/subscribe',methods=["GET","POST"])
+def subscriber():
+    form=SubscriberForm()
+
+    if form.validate_on_submit():
+        subscriber = Subscriber(name=form.name.data,email=form.email.data)
+        db.session.add(subscriber)
+        db.session.commit()
+
+        mail_message("Welcome to my blogpost","email/welcome_user",subscriber.email,subscriber=subscriber)
+        flash('A confirmation by email has been sent to you by email')
+        return redirect(url_for('main.index'))
+        title = 'Subscribe'
+    return render_template('subscription.html',form=form)
+
+
+@main.route('/blogpost/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_blogpost(id):
+    """
+    Edit a blogpost in the database
+    """
+    new_blogpost=False
+
+    blogpost = Blogpost.query.get(id)
+    form = BlogpostForm()
+
+    if form.validate_on_submit():
+
+        blogpost.blogpost = form.blogpost.data
+
+        db.session.commit()
+
+        print('edited comment ')
+
+
+        return redirect(url_for('main.index'))
+
+    form.blogpost.data = blogpost.blogpost
+
+
+    return render_template('new_blogpost.html',
+                           action = 'Edit',
+                           new_blogpost = new_blogpost,
+                           blogpost_form = form,
+                           legend='Update Post')
