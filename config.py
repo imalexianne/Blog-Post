@@ -2,8 +2,9 @@ import os
 
 class Config:
 
-    # MOVIE_API_BASE_URL ='https://api.themoviedb.org/3/movie/{}?api_key={}'
-    # MOVIE_API_KEY = os.environ.get('MOVIE_API_KEY')
+    BLOG_API_BASE_URL ='http://quotes.stormconsultancy.co.uk/random.json' 
+
+    BLOG_API_KEY = os.environ.get('BLOG_API_KEY')
     SECRET_KEY = os.environ.get('SECRET_KEY')
 
     
@@ -30,6 +31,7 @@ class ProdConfig(Config):
 
 class TestConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://alexianne:wecode@localhost/blogpost'
+    DEBUG = True
 
 
 class DevConfig(Config):

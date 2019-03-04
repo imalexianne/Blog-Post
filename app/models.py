@@ -1,7 +1,7 @@
-from . import db
+from . import db, login_manager
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
-from . import login_manager
+# from . import login_manager
 from datetime import datetime
 
 @login_manager.user_loader
@@ -84,3 +84,34 @@ class Comment(db.Model):
     def get_comments(id):
         comments = Comment.query.all()
         return comments
+
+class Subscriber(UserMixin, db.Model):
+    __tablename__="subscribers"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255))
+    email = db.Column(db.String(255),unique = True,index = True)
+
+
+    def save_subscriber(self):
+       db.session.add(self)
+       db.session.commit()
+
+    @classmethod
+    def get_subscribers(cls,id):
+        return Subscriber.query.all()
+
+
+    def __repr__(self):
+        return f'User {self.email}'
+
+    @login_manager.user_loader
+    def load_user(user_id):
+       return User.query.get(int(user_id))
+
+
+class Quote:
+    def __init__(self,id,author,quote):
+        self.id =id
+        self.author = author
+        self. quote = quote

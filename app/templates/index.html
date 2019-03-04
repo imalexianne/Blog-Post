@@ -8,7 +8,7 @@
 
   <title> {{ title }}</title>
   {% else %}
-  <title> Welcome to the best pitches </title>
+  <title> Welcome to the best blogposts </title>
   {% endif %}
   {% extends 'base.html'%}
   {% import 'macros.html' as macro%}
@@ -22,6 +22,17 @@
 <body>
   {% block content %}
   <h1>Hello wellcome to blogposts!!!</h1>
+
+  <div class="container-fluid">
+    
+    <a href="/subscribe" style="float:right;">subscribe</a>
+  </div>
+  <blockquote class="text-center text-lg">
+      <h2> Random Quotes</h2>
+      <p>{{quote.quote}}</p>
+      <p class="sab">Author: {{quote.author}}</p>
+  <br><br>
+
   <ul>
       {%for blogpost in blogposts%}       
      <li>{{blogpost.description_path}}</li> 
@@ -34,7 +45,7 @@
   {% endblock%}
 
 </body>
-</html>
+</html> 
 
 
  

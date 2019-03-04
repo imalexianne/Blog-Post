@@ -2,26 +2,41 @@ from flask_login import login_required,current_user
 from . import main
 from flask import render_template,request,redirect,url_for,abort
 # from ..models import User,PhotoProfile
-from ..models import User,Blogpost,Comment
-from .forms import UpdateProfile,BlogpostForm,CommentForm
+from ..models import Blogpost, Comment, User, Subscriber, Quote
+from .forms import BlogpostForm, CommentForm
 # from .forms import ReviewForm,UpdateProfile
 from .. import db,photos
 import markdown2 
+from ..request import get_quotes
+
 
 
 
 # @main.route('/movie/review/new/<int:id>', methods = ['GET','POST'])
+# @main.route('/')
+# def index():
+#     '''
+#     function that returns the index page
+#     '''
+#     quote = get_quotes()
+#     blogs = Blog.query.all()
+#     return render_template('index.html', blogs = blogs, quote=quote)
+
 @main.route('/')
 def index():
 
     '''
     View root page function that returns the index page and its data
     '''
+
+    quote = get_quotes()
+    # blogs = Blog.query.all()
+
     blogposts = Blogpost.get_blogposts(id)
     comments = Comment.get_comments()
     title = 'Home - Welcome to The best Blogposts Review Website Online'
 
-    return render_template('index.html', title = title, blogposts=blogposts,comments= comments)
+    return render_template('index.html', title = title, blogposts=blogposts,comments= comments, quote=quote)
 
 
 
@@ -139,3 +154,16 @@ def diplay_comment():
    comments = Comment.get_comments()
    print(comments)
    return render_template("comment.html",comments = comments)
+
+@main.route('/del-comment/<id>')
+@login_required
+def delcomment(id):
+    '''
+    function to delete comments
+    '''
+    comment = Comment.query.filter_by(id = id).first()
+    db.session.delete(comment)
+    db.session.commit()
+    print(comment)
+    title = 'delete comments'
+    return render_template('delete.html',title = title, comment = comment)
