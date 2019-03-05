@@ -15,15 +15,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
  
+  {% block styles%}
+  {{ super() }}
+  <link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}">
+{% endblock %}
   
-  <link rel="stylesheet" href="{{url_for ('static',filename='CSS/index.css')}}">
   </head>
 
 <body>
   {% block content %}
-
+  <div class="container-fluid">
   <h1 class="text-center text-lg">Hello wellcome to blogposts!!!</h1>
-
+  </div>
   
   <blockquote class="text-center text-lg">
       <h2> Random Quotes</h2>
@@ -31,12 +34,11 @@
       <p class="sab">Author: {{quote.author}}</p>
   <br><br>
 
-  
       {%for blogpost in blogposts%}       
      <p>Blogpost:{{blogpost.description_path}}</p> 
      <a href="/comment/new" class="btn btn-primary btn-md">Leave comment</a>
      <a class="btn btn-primary btn-md" href="/delete/{{blogpost.id}}">Delete blogpost</a> 
-     <a href="/comment" class="btn btn-primary btn-md">view comments</a>
+     <a href="/comment" class="btn btn-primary btn-md">view comments</a><br><br>
   
   {%endfor%}
   
